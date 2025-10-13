@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [todo, settodo] = useState("")
   const [todos, settodos] = useState([])
+  const [showFinished, setshowFinished] = useState(false)
 
   useEffect(() => {
     let todoString = localStorage.getItem("todos")
@@ -19,6 +20,10 @@ function App() {
   const saveToLs = () => {
     localStorage.setItem("todos",JSON.stringify(todos))
   }
+  const toggleFinished = (e) => {
+    setshowFinished(!showFinished)
+  }
+  
   
   const handleEdit = (e, id)=>{
     let t = todos.filter(i=>i.id===id)
@@ -44,6 +49,7 @@ function App() {
     settodos([...todos, {id: uuidv4(),todo, isCompleted: false}])
     settodo("")
     saveToLs()
+    saveToLs()
   }
 
   const handleCheckBox = (e) => {
@@ -67,18 +73,20 @@ function App() {
         <div className="addTodo my-5">
           <h2 className='text-lg font-bold'>Add a todo</h2>
           <input onChange={handleChange} value={todo} type="text" className='w-1/2 bg-white'/>
-        <button onClick={handleAdd} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold'>Save</button>
+        <button onClick={handleAdd} disabled={todo.length<=3} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold disabled:bg-gray-500'>Save</button>
         </div>
         
+          <input onChange={toggleFinished} type="checkbox" checked={showFinished} name="" id="" />Show Finished
+
           <h1 className='text-xl font-bold'>Your Todos</h1>
 
           <div className="todos">
             {todos.length == 0 && <div className='m-5'>No task to display</div>}
             {todos.map(item=>{
               return (
-               <div key={item.id} className="todo flex w-1/2 justify-between my-3">
+               (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-1/2 justify-between my-3">
                 <div className='flex gap-5 items-center'>
-                <input onChange={handleCheckBox} type="checkbox" value={todo.isCompleted} name={item.id} id="" />
+                <input onChange={handleCheckBox} type="checkbox" checked={todo.isCompleted} name={item.id} id="" />
               <div className={item.isCompleted?"line-through":""}>    
                 {item.todo}
                 </div>
