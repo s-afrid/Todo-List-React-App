@@ -76,12 +76,13 @@ function App() {
         <button onClick={handleAdd} disabled={todo.length<=3} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold disabled:bg-gray-500'>Save</button>
         </div>
         
-          <input onChange={toggleFinished} type="checkbox" checked={showFinished} name="" id="" />Show Finished
+          <input onChange={toggleFinished} type="checkbox" checked={showFinished} name="" id="" />
+          <label className='mx-2' htmlFor="show">Show Finished</label> 
 
           <h1 className='text-xl font-bold'>Your Todos</h1>
 
           <div className="todos">
-            {todos.length == 0 && <div className='m-5'>No task to display</div>}
+            {todos.length === 0 && <div className='m-5'>No task to display</div>}
             {todos.map(item=>{
               return (
                (showFinished || !item.isCompleted) && <div key={item.id} className="todo flex w-1/2 justify-between my-3">
