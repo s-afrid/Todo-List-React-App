@@ -7,11 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [todo, settodo] = useState("")
   const [todos, settodos] = useState([])
-  const handleEdit = ()=>{
-
+  const handleEdit = (e, id)=>{
+    let t = todos.filter(i=>i.id===id)
+    settodo(t[0].todo)
+    handleDelete(e, id)
   }
 
-    const handleDelete = (e,id)=>{
+  const handleDelete = (e,id)=>{
     let newTodos = todos.filter(item=>{
       return item.id!==id
     })
@@ -23,6 +25,7 @@ function App() {
   } 
 
   const handleAdd = ()=>{
+
     settodos([...todos, {id: uuidv4(),todo, isCompleted: false}])
     settodo("")
   }
@@ -46,8 +49,8 @@ function App() {
       <div className="container mx-auto my-5 rounded-xl bg-[#edeae1] p-5 min-h-[70vh]">
         <div className="addTodo my-5">
           <h2 className='text-lg font-bold'>Add a todo</h2>
-          <input onChange={handleChange} value={todo} type="text" className='w-1/2'/>
-        <button onClick={handleAdd} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold'>Add</button>
+          <input onChange={handleChange} value={todo} type="text" className='w-1/2 bg-white'/>
+        <button onClick={handleAdd} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold'>Save</button>
         </div>
         
           <h1 className='text-xl font-bold'>Your Todos</h1>
@@ -64,7 +67,7 @@ function App() {
                 </div>
               </div>
               <div className="buttons">
-                <button onClick={handleEdit} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Edit</button>
+                <button onClick={(e)=>{handleEdit(e, item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Edit</button>
                 <button onClick={(e)=>{handleDelete(e,item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Delete</button>
               </div>
           </div>
