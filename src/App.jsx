@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,10 +7,24 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
   const [todo, settodo] = useState("")
   const [todos, settodos] = useState([])
+
+  useEffect(() => {
+    let todoString = localStorage.getItem("todos")
+    if(todoString){
+      let todos = JSON.parse(localStorage.getItem("todos"))
+      settodos(todos)
+    }
+  }, [])
+  
+  const saveToLs = () => {
+    localStorage.setItem("todos",JSON.stringify(todos))
+  }
+  
   const handleEdit = (e, id)=>{
     let t = todos.filter(i=>i.id===id)
     settodo(t[0].todo)
     handleDelete(e, id)
+    saveToLs()
   }
 
   const handleDelete = (e,id)=>{
@@ -18,6 +32,7 @@ function App() {
       return item.id!==id
     })
     settodos(newTodos)
+    saveToLs()
   }
 
   const handleChange = (e)=>{
@@ -28,6 +43,7 @@ function App() {
 
     settodos([...todos, {id: uuidv4(),todo, isCompleted: false}])
     settodo("")
+    saveToLs()
   }
 
   const handleCheckBox = (e) => {
@@ -40,6 +56,7 @@ function App() {
     let newTodos = [...todos];
     newTodos[index].isCompleted = !newTodos[index].isCompleted;
     settodos(newTodos)
+    saveToLs()
   }
   
 
@@ -66,7 +83,7 @@ function App() {
                 {item.todo}
                 </div>
               </div>
-              <div className="buttons">
+              <div className="buttons flex h-full">
                 <button onClick={(e)=>{handleEdit(e, item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Edit</button>
                 <button onClick={(e)=>{handleDelete(e,item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Delete</button>
               </div>
