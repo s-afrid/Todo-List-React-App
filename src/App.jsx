@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import { v4 as uuidv4 } from 'uuid';
+import { FaEdit } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 
 
 
@@ -16,6 +18,8 @@ function App() {
       settodos(todos)
     }
   }, [])
+
+  
   
   const saveToLs = (params) => {
     localStorage.setItem("todos",JSON.stringify(todos))
@@ -76,7 +80,7 @@ function App() {
       <h1 className='font-bold text-center text-xl'>Task Nest - Manage all your todos at one place</h1>
         <div className="addTodo my-5 flex flex-col gap-3 items-center">
           <h2 className='text-lg font-bold'>Add a todo</h2>
-          <input onChange={handleChange} value={todo} type="text" className='w-full bg-white'/>
+          <input onChange={handleChange} value={todo} type="text" className='w-full bg-white py-2 px-3 rounded-full'/>
         <button onClick={handleAdd} disabled={todo.length<=3} className='w-1/2 bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-6 text-sm font-bold disabled:bg-gray-500 disabled:hover:bg-gray-600'>Save</button>
         </div>
         
@@ -91,14 +95,14 @@ function App() {
               return (
                (showFinished || !item.isCompleted) && <div key={item.id} className={"todo flex w-1/2 justify-between my-3"}>
                 <div className='flex gap-5 items-center'>
-                <input name={item.id} onChange={handleCheckBox} type="checkbox" checked={todo.isCompleted} id="" />
+                <input name={item.id} onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} id="" />
               <div className={item.isCompleted?"line-through":""}>    
                 {item.todo}
                 </div>
               </div>
               <div className="buttons flex h-full">
-                <button onClick={(e)=>{handleEdit(e, item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Edit</button>
-                <button onClick={(e)=>{handleDelete(e,item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'>Delete</button>
+                <button onClick={(e)=>{handleEdit(e, item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'><FaEdit /></button>
+                <button onClick={(e)=>{handleDelete(e,item.id)}} className='bg-[#cd2028] md:hover:bg-[#eb404e] active:bg-green-700 p-3 py-1 rounded-lg text-white transition-all duration-200 mx-2 text-sm font-bold'><AiFillDelete /></button>
               </div>
           </div>
               )
