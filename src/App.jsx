@@ -76,7 +76,7 @@ function App() {
   return (
     <>
       <Navbar/>
-      <div className="md:container mx-auto my-5 rounded-xl bg-[#edeae1] p-5 min-h-[80vh] w-[90vw] md:w-[35%]">
+      <div className="md:container mx-auto my-5 rounded-xl bg-[#edeae1] p-5 min-h-[80vh] w-[90vw] lg:w-1/2">
       <h1 className='font-bold text-center text-3xl'>Task Nest</h1>
         <div className="addTodo my-5 flex flex-col gap-4">
           <h2 className='text-xl font-bold'>Add a todo</h2>
