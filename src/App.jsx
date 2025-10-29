@@ -102,7 +102,7 @@ function App() {
                (showFinished || !item.isCompleted) && <div key={item.id} className={"todo flex flex-col sm:flex-row justify-between items-start sm:items-center my-3 w-full bg-white rounded-lg p-3 shadow-sm break-words"}>
                 <div className='flex gap-5'>
                 <input name={item.id} onChange={handleCheckBox} type="checkbox" checked={item.isCompleted} id="" />
-              <div className={`text-wrap break-words w-1/2 ${item.isCompleted ? "line-through" : ""}`}>    
+              <div className={`text-wrap break-words w-full ${item.isCompleted ? "line-through" : ""}`}>    
                 {item.todo}
                 </div>
               </div>
